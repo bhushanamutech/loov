@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/E:/wamp/www/loov/ow_themes/morning/main.css</file>
+        <file>file:/E:/wamp/www/loov/ow_themes/morning/master_pages/general.html</file>
+        <file>file:/E:/wamp/www/loov/ow_themes/morning/master_pages/index.html</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/skadate/components/user_list.php</file>
+        <file>file:/E:/wamp/www/loov/ow_includes/config.php</file>
+        <file>file:/E:/wamp/www/loov/ow_core/master_page.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/bol/service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/bol/listing_dao.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/deactivate.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/views/controllers/listing_index.html</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/controllers/listing.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/language_en/loovlisting.xml</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/views/controllers/listing_men.html</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/bol/user_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/bol/user_dao.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/usearch/bol/service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/usearch/bol/search_dao.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/photo/bol/search_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/controllers/admin.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/bol/search_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/views/controllers/admin_subscribe.html</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/controllers/subscribe.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/classes/membership_plan_product_adapter.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/controllers/component_panel.php</file>
+        <file>file:/E:/wamp/www/loov/ow_core/api_application.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/classes/event_handler.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/loov_listing/controllers/admin.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/api/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/mobile/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_core/exception.php</file>
+        <file>file:/E:/wamp/www/loov/ow_core/request.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/skadate/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/bol/membership_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/classes/event_handler.php</file>
+        <file>file:/E:/wamp/www/loov/ow_core/event_manager.php</file>
+    </open-files>
+</project-private>

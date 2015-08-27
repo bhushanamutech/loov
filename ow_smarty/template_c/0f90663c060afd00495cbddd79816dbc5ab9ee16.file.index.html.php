@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 02:19:23
+<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:40
          compiled from "E:\wamp\www\loov\ow_themes\morning\master_pages\index.html" */ ?>
-<?php /*%%SmartyHeaderCode:1988755dab76bb7db59-57754967%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1069855daf250e94336-44706213%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1988755dab76bb7db59-57754967',
+  'nocache_hash' => '1069855daf250e94336-44706213',
   'function' => 
   array (
   ),
@@ -29,9 +29,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55dab76bc354f5_95515706',
+  'unifunc' => 'content_55daf250f345e1_48531087',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55dab76bc354f5_95515706')) {function content_55dab76bc354f5_95515706($_smarty_tpl) {?><?php if (!is_callable('smarty_function_component')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.component.php';
+<?php if ($_valid && !is_callable('content_55daf250f345e1_48531087')) {function content_55daf250f345e1_48531087($_smarty_tpl) {?><?php if (!is_callable('smarty_function_component')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.component.php';
 if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
 if (!is_callable('smarty_function_decorator')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.decorator.php';
 ?><!--<script type="text/javascript" src="http://www.loov.co/ow_static/plugins/base/js/jquery-1.11.1.js"></script>-->

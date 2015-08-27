@@ -33,9 +33,6 @@ if (defined('OW_CRON')) {
     define('OW_DEV_MODE', false);
     define('OW_PROFILER_ENABLE', false);
 } else {
-    /**
-     * Make changes in this block if you want to enable DEV mode and DEBUG mode
-     */
     define('OW_DEBUG_MODE', false);
     define('OW_DEV_MODE', false);
     define('OW_PROFILER_ENABLE', false);

@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 02:19:22
+<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:40
          compiled from "E:\wamp\www\loov\ow_plugins\photo\views\components\photo_floatbox.html" */ ?>
-<?php /*%%SmartyHeaderCode:1605555dab76aed1187-88169370%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1598655daf250808531-60430066%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1605555dab76aed1187-88169370',
+  'nocache_hash' => '1598655daf250808531-60430066',
   'function' => 
   array (
   ),
@@ -23,9 +23,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55dab76b0c3740_55998236',
+  'unifunc' => 'content_55daf2508a4950_86223066',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55dab76b0c3740_55998236')) {function content_55dab76b0c3740_55998236($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
+<?php if ($_valid && !is_callable('content_55daf2508a4950_86223066')) {function content_55daf2508a4950_86223066($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
 if (!is_callable('smarty_function_add_content')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.add_content.php';
 ?>
 

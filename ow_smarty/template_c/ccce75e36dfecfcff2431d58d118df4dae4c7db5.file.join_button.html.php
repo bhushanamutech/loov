@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 02:19:25
+<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:41
          compiled from "E:\wamp\www\loov\ow_system_plugins\base\views\components\join_button.html" */ ?>
-<?php /*%%SmartyHeaderCode:1991055dab76d65d941-71189539%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1095755daf2516a1272-54552505%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1991055dab76d65d941-71189539',
+  'nocache_hash' => '1095755daf2516a1272-54552505',
   'function' => 
   array (
   ),
@@ -22,9 +22,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55dab76d6905c4_07227164',
+  'unifunc' => 'content_55daf2516c0671_30359040',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55dab76d6905c4_07227164')) {function content_55dab76d6905c4_07227164($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
+<?php if ($_valid && !is_callable('content_55daf2516c0671_30359040')) {function content_55daf2516c0671_30359040($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
 ?><div class="ow_join_button">
     <a href="<?php echo $_smarty_tpl->tpl_vars['url']->value;?>
 " class="<?php echo $_smarty_tpl->tpl_vars['class']->value;?>

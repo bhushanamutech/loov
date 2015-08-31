@@ -19,6 +19,46 @@
 class MEMBERSHIP_CTRL_Subscribe extends OW_ActionController {
 
     public function index() {
+
+//        $billingService = BOL_BillingService::getInstance();
+//        $membershipService = MEMBERSHIP_BOL_MembershipService::getInstance();
+//
+////$url = OW::getRouter()->urlForRoute('membership_subscribe');
+//        $lang = OW::getLanguage();
+//        $planId = 16;
+//        $userId = 8;
+//        if (!$plan = $membershipService->findPlanById($planId)) {
+//
+//            $message = $lang->text('membership', 'plan_not_found');
+////            OW::getApplication()->redirect($url);
+//            $this->jsonEncodeResponse(array("status" => "false", "message" => $message));
+//        }
+//
+//        if ($plan->price == 0) { // trial plan
+//// check if trial plan used
+//            $used = $membershipService->isTrialUsedByUser($userId);
+//
+//            if ($used) {
+//                $message = $lang->text('membership', 'trial_used_error');
+//// OW::getApplication()->redirect($url);
+//                // $this->jsonEncodeResponse(array("status" => "false", "message" => $message));
+//            } else { // give trial plan
+//                $userMembership = new MEMBERSHIP_BOL_MembershipUser();
+//
+//                $userMembership->userId = $userId;
+//                $userMembership->typeId = $plan->typeId;
+//                $userMembership->expirationStamp = time() + (int) $plan->period * 3600 * 24;
+//                $userMembership->recurring = 0;
+//                $userMembership->trial = 1;
+//
+//                $membershipService->setUserMembership($userMembership);
+//                $membershipService->addTrialPlanUsage($userId, $plan->id, $plan->period);
+//
+////                $message = $lang->text('membership', 'trial_granted', array('days' => $plan->period));
+//////OW::getApplication()->redirect($url);
+////                $this->jsonEncodeResponse(array("status" => "true", "message" => $message));
+//            }
+//        }
         if (!OW::getUser()->isAuthenticated()) {
             throw new AuthenticateException();
         }

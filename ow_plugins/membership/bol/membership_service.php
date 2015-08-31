@@ -16,36 +16,39 @@
  * @package ow.ow_plugins.membership.bol
  * @since 1.0
  */
-final class MEMBERSHIP_BOL_MembershipService
-{
+final class MEMBERSHIP_BOL_MembershipService {
+
     /**
      * @var MEMBERSHIP_BOL_MembershipTypeDao
      */
     private $membershipTypeDao;
+
     /**
      * @var MEMBERSHIP_BOL_MembershipPlanDao
      */
     private $membershipPlanDao;
+
     /**
      * @var MEMBERSHIP_BOL_MembershipUserDao
      */
     private $membershipUserDao;
+
     /**
      * @var MEMBERSHIP_BOL_MembershipUserTrialDao
      */
     private $membershipUserTrialDao;
+
     /**
      * Class instance
      *
      * @var MEMBERSHIP_BOL_MembershipService
      */
     private static $classInstance;
-    
+
     /**
      * Class constructor
      */
-    private function __construct()
-    {
+    private function __construct() {
         $this->membershipTypeDao = MEMBERSHIP_BOL_MembershipTypeDao::getInstance();
         $this->membershipPlanDao = MEMBERSHIP_BOL_MembershipPlanDao::getInstance();
         $this->membershipUserDao = MEMBERSHIP_BOL_MembershipUserDao::getInstance();
@@ -57,15 +60,14 @@ final class MEMBERSHIP_BOL_MembershipService
      *
      * @return MEMBERSHIP_BOL_MembershipService
      */
-    public static function getInstance()
-    {
-        if ( null === self::$classInstance )
-        {
+    public static function getInstance() {
+        if (null === self::$classInstance) {
             self::$classInstance = new self();
         }
 
         return self::$classInstance;
     }
+
     /* ------- Memebrship type methods ------- */
 
     /**
@@ -74,8 +76,7 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param int $accTypeId
      * @return array of MEMBERSHIP_BOL_MembershipType
      */
-    public function getTypeList( $accTypeId = null )
-    {
+    public function getTypeList($accTypeId = null) {
         return $this->membershipTypeDao->getAllTypeList($accTypeId);
     }
 
@@ -85,20 +86,16 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param int $accTypeId
      * @return array mixed
      */
-    public function getTypeListWithPlans( $accTypeId = null )
-    {
+    public function getTypeListWithPlans($accTypeId = null) {
         $types = $this->membershipTypeDao->getTypeList($accTypeId);
 
         $typesWithPlans = array();
 
-        foreach ( $types as $key => $type )
-        {
+        foreach ($types as $key => $type) {
             $typesWithPlans[$key] = $type;
             $plans = $this->membershipPlanDao->findPlanListByTypeId($type['id']);
-            if ( $plans )
-            {
-                foreach ( $plans as $plan )
-                {
+            if ($plans) {
+                foreach ($plans as $plan) {
                     $typesWithPlans[$key]['plans'][] = array(
                         'dto' => $plan,
                         'plan_format' => $this->getFormattedPlan($plan->price, $plan->period, $plan->recurring)
@@ -110,10 +107,8 @@ final class MEMBERSHIP_BOL_MembershipService
         return $typesWithPlans;
     }
 
-    public function getPlanProductId( $planId )
-    {
-        if ( !$planId )
-        {
+    public function getPlanProductId($planId) {
+        if (!$planId) {
             return null;
         }
 
@@ -125,32 +120,28 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Finds membership type by type Id
-     * 
+     *
      * @param int $typeId
      * @return MEMBERSHIP_BOL_MembershipType
      */
-    public function findTypeById( $typeId )
-    {
+    public function findTypeById($typeId) {
         return $this->membershipTypeDao->findById($typeId);
     }
 
     /**
      * Finds membership type by plan Id
-     * 
+     *
      * @param int $planId
      * @return MEMBERSHIP_BOL_MembershipType
      */
-    public function findTypeByPlanId( $planId )
-    {
-        if ( !$planId )
-        {
+    public function findTypeByPlanId($planId) {
+        if (!$planId) {
             return false;
         }
 
         $plan = $this->findPlanById($planId);
 
-        if ( $plan )
-        {
+        if ($plan) {
             return $this->findTypeById($plan->typeId);
         }
 
@@ -159,17 +150,15 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Adds membership type & plan if passed
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipType $type
      * @param MEMBERSHIP_BOL_MembershipPlan $plan
      * @return boolean
      */
-    public function addType( MEMBERSHIP_BOL_MembershipType $type, MEMBERSHIP_BOL_MembershipPlan $plan = null )
-    {
+    public function addType(MEMBERSHIP_BOL_MembershipType $type, MEMBERSHIP_BOL_MembershipPlan $plan = null) {
         $this->membershipTypeDao->save($type);
 
-        if ( $plan !== null )
-        {
+        if ($plan !== null) {
             $plan->typeId = $type->id;
 
             $this->addPlan($plan);
@@ -180,12 +169,11 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Updates membership type
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipType $type
      * @return int
      */
-    public function updateType( MEMBERSHIP_BOL_MembershipType $type )
-    {
+    public function updateType(MEMBERSHIP_BOL_MembershipType $type) {
         $this->membershipTypeDao->save($type);
 
         return $type->id;
@@ -193,37 +181,35 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Deletes membership type
-     * 
+     *
      * @param int $typeId
      */
-    public function deleteType( $typeId )
-    {
+    public function deleteType($typeId) {
         $this->membershipTypeDao->deleteById($typeId);
     }
 
     /**
      * Deletes membership type & its plans
-     * 
+     *
      * @param int $typeId
      */
-    public function deleteTypeWithPlans( $typeId )
-    {
+    public function deleteTypeWithPlans($typeId) {
         $this->deleteUserTrialsByTypeId($typeId);
 
         $this->membershipTypeDao->deleteById($typeId);
 
         $this->membershipPlanDao->deletePlansByTypeId($typeId);
     }
+
     /* ------- Memebrship plan methods ------- */
 
     /**
      * Finds plan by Id
-     * 
+     *
      * @param int $planId
      * @return MEMBERSHIP_BOL_MembershipPlan
      */
-    public function findPlanById( $planId )
-    {
+    public function findPlanById($planId) {
         return $this->membershipPlanDao->findById((int) $planId);
     }
 
@@ -233,13 +219,11 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param array $exclude
      * @return array
      */
-    public function getTypePlanList( array $exclude = array() )
-    {
+    public function getTypePlanList(array $exclude = array()) {
         $plans = $this->membershipPlanDao->findPlanList($exclude);
 
         $typePlans = array();
-        foreach ( $plans as $plan )
-        {
+        foreach ($plans as $plan) {
             $plan->price = floatval($plan->price);
             $pl = array(
                 'dto' => $plan,
@@ -255,17 +239,15 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Get list of plans by membership type Id
-     * 
+     *
      * @param int $typeId
      * @return array of MEMBERSHIP_BOL_MembershipPlan
      */
-    public function getPlanList( $typeId )
-    {
+    public function getPlanList($typeId) {
         $plans = $this->membershipPlanDao->findPlanListByTypeId($typeId);
 
         $typePlans = array();
-        foreach ( $plans as $plan )
-        {
+        foreach ($plans as $plan) {
             $plan->price = floatval($plan->price);
             $typePlans[] = array(
                 'dto' => $plan,
@@ -279,12 +261,11 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Adds membership plan
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipPlan $plan
      * @return int
      */
-    public function addPlan( MEMBERSHIP_BOL_MembershipPlan $plan )
-    {
+    public function addPlan(MEMBERSHIP_BOL_MembershipPlan $plan) {
         $this->membershipPlanDao->save($plan);
 
         return $plan->id;
@@ -292,50 +273,42 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Updates plan
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipPlan $plan
      * @return int
      */
-    public function updatePlan( MEMBERSHIP_BOL_MembershipPlan $plan )
-    {
+    public function updatePlan(MEMBERSHIP_BOL_MembershipPlan $plan) {
         $this->membershipPlanDao->save($plan);
-
         return $plan->id;
     }
 
     /**
      * Deletes plan
-     * 
+     *
      * @param int $planId
      */
-    public function deletePlan( $planId )
-    {
+    public function deletePlan($planId) {
         $this->membershipPlanDao->deleteById($planId);
     }
-    
-    public function deletePlansByTypeId( $typeId )
-    {
+
+    public function deletePlansByTypeId($typeId) {
         $this->membershipPlanDao->deletePlansByTypeId($typeId);
     }
 
     /**
      * Get plan formatted string
-     * 
+     *
      * @param float $price
      * @param int $period
      * @param boolean $recurring
      * @param string $currency
      * @return string
      */
-    public function getFormattedPlan( $price, $period, $recurring = false, $currency = null )
-    {
-        if ( $price == 0 )
-        {
+    public function getFormattedPlan($price, $period, $recurring = false, $currency = null) {
+        if ($price == 0) {
             $langKey = 'plan_struct_trial';
             $params = array('period' => $period);
-        }
-        else
-        {
+        } else {
             $currency = isset($currency) ? $currency : BOL_BillingService::getInstance()->getActiveCurrency();
             $params = array('currency' => $currency, 'price' => floatval($price), 'period' => $period);
             $langKey = $recurring ? 'plan_struct_recurring' : 'plan_struct';
@@ -349,34 +322,30 @@ final class MEMBERSHIP_BOL_MembershipService
     /* ------- Misc methods ------- */
 
     /**
-     * Get membership title by authorization role Id 
-     * 
+     * Get membership title by authorization role Id
+     *
      * @param int $roleId
      * @return string
      */
-    public function getMembershipTitle( $roleId )
-    {
-        if ( !$roleId )
-        {
+    public function getMembershipTitle($roleId) {
+        if (!$roleId) {
             return null;
         }
         $role = BOL_AuthorizationService::getInstance()->getRoleById($roleId);
 
-        if ( $role )
-        {
+        if ($role) {
             return OW::getLanguage()->text('base', 'authorization_role_' . $role->name);
         }
 
         return null;
     }
-    
+
     /**
      * Set user membership
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipUser $userMembership
      */
-    public function setUserMembership( MEMBERSHIP_BOL_MembershipUser $userMembership )
-    {
+    public function setUserMembership(MEMBERSHIP_BOL_MembershipUser $userMembership) {
         $userId = $userMembership->userId;
         $newType = $this->findTypeById($userMembership->typeId);
 
@@ -385,11 +354,9 @@ final class MEMBERSHIP_BOL_MembershipService
 
         $authService = BOL_AuthorizationService::getInstance();
 
-        if ( $currentMembership )
-        {
+        if ($currentMembership) {
             $currentType = $this->findTypeById($currentMembership->typeId);
-            if ( $currentType )
-            {
+            if ($currentType) {
                 $authService->deleteUserRole($userId, $currentType->roleId);
             }
             $this->deleleUserMembership($currentMembership);
@@ -399,18 +366,15 @@ final class MEMBERSHIP_BOL_MembershipService
         $this->membershipUserDao->save($userMembership);
     }
 
-    public function setDefaultMembership( $userId )
-    {
+    public function setDefaultMembership($userId) {
         /* @var $currentMembership MEMBERSHIP_BOL_MembershipUser */
         $currentMembership = $this->getUserMembership($userId);
 
         $authService = BOL_AuthorizationService::getInstance();
 
-        if ( $currentMembership )
-        {
+        if ($currentMembership) {
             $type = $this->findTypeById($currentMembership->typeId);
-            if ( $type )
-            {
+            if ($type) {
                 $authService->deleteUserRole($userId, $type->roleId);
             }
             $authService->assignDefaultRoleToUser($userId);
@@ -422,47 +386,40 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Deletes users' expired memberships
-     * 
+     *
      * @return boolean
      */
-    public function expireUsersMemberships()
-    {
+    public function expireUsersMemberships() {
         $msList = $this->membershipUserDao->findExpiredMemberships();
 
-        if ( !$msList )
-        {
+        if (!$msList) {
             return true;
         }
-        
+
         $authService = BOL_AuthorizationService::getInstance();
-        
-        foreach ( $msList as $ms )
-        {
+
+        foreach ($msList as $ms) {
             $type = $this->findTypeById($ms->typeId);
             $userId = $ms->userId;
 
-            if ( $type )
-            {
+            if ($type) {
                 $authService->deleteUserRole($userId, $type->roleId);
             }
 
             $authService->assignDefaultRoleToUser($userId);
             $this->membershipUserDao->deleteById($ms->id);
 
-            if ( $type )
-            {
+            if ($type) {
                 $label = $this->getMembershipTitle($type->roleId);
                 $this->sendMembershipExpiredNotification($userId, $label);
             }
         }
-        
+
         return true;
     }
 
-    public function getRemainingPeriod( $expTime )
-    {
-        if ( $expTime < time() )
-        {
+    public function getRemainingPeriod($expTime) {
+        if ($expTime < time()) {
             return 0;
         }
 
@@ -471,97 +428,81 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Returns user's membership
-     * 
+     *
      * @param int $userId
      * @return MEMBERSHIP_BOL_MembershipUser
      */
-    public function getUserMembership( $userId )
-    {
+    public function getUserMembership($userId) {
         return $this->membershipUserDao->findByUserId($userId);
     }
-    
-    public function getUserListByMembershipType( $typeId, $page, $onPage )
-    {
+
+    public function getUserListByMembershipType($typeId, $page, $onPage) {
         return $this->membershipUserDao->findByTypeId($typeId, $page, $onPage);
     }
 
-    public function getUserObjectListByMembershipType( $typeId, $page, $onPage )
-    {
+    public function getUserObjectListByMembershipType($typeId, $page, $onPage) {
         return $this->membershipUserDao->findObjectsByTypeId($typeId, $page, $onPage);
     }
 
-    public function getUserListByMembershipTypeIdList( $typeIdList, $page, $onPage )
-    {
+    public function getUserListByMembershipTypeIdList($typeIdList, $page, $onPage) {
         return $this->membershipUserDao->findByTypeIdList($typeIdList, $page, $onPage);
     }
-    
-    public function countUsersByMembershipType( $typeId )
-    {
+
+    public function countUsersByMembershipType($typeId) {
         return $this->membershipUserDao->countByTypeId($typeId);
     }
 
-    public function countUsersByMembershipTypeIdList( $typeIdList )
-    {
+    public function countUsersByMembershipTypeIdList($typeIdList) {
         return $this->membershipUserDao->countByTypeIdList($typeIdList);
     }
 
-    public function getMembershipTypeIdListByRoleId( $roleId )
-    {
+    public function getMembershipTypeIdListByRoleId($roleId) {
         return $this->membershipTypeDao->getTypeIdListByRoleId($roleId);
     }
 
-    public function deleteMembershipTypeByRoleId( $roleId )
-    {
+    public function deleteMembershipTypeByRoleId($roleId) {
         $types = $this->membershipTypeDao->getTypeIdListByRoleId($roleId);
-        
-        if ( $types )
-        {
-            foreach ( $types as $typeId )
-            {
+
+        if ($types) {
+            foreach ($types as $typeId) {
                 $this->deleteUserTrialsByTypeId($typeId);
                 $this->membershipPlanDao->deletePlansByTypeId($typeId);
             }
         }
-            
+
         $this->membershipTypeDao->deleteByRoleId($roleId);
-        
-        return true;        
+
+        return true;
     }
-    
-    public function deleteUserMembershipsByRoleId( $roleId )
-    {
+
+    public function deleteUserMembershipsByRoleId($roleId) {
         $types = $this->membershipTypeDao->getTypeIdListByRoleId($roleId);
-        
-        if ( $types )
-        {
-            foreach ( $types as $typeId )
-            {
+
+        if ($types) {
+            foreach ($types as $typeId) {
                 $this->membershipUserDao->deleteByTypeId($typeId);
             }
         }
-        
-        return true;        
+
+        return true;
     }
 
     /**
      * Deletes user's membership
-     * 
+     *
      * @param MEMBERSHIP_BOL_MembershipUser $userMembership
      * @return boolean
      */
-    public function deleleUserMembership( MEMBERSHIP_BOL_MembershipUser $userMembership )
-    {
+    public function deleleUserMembership(MEMBERSHIP_BOL_MembershipUser $userMembership) {
         $this->membershipUserDao->delete($userMembership);
 
         return true;
     }
-    
-    public function deleleUserMembershipByUserId( $userId )
-    {
+
+    public function deleleUserMembershipByUserId($userId) {
         $membership = $this->getUserMembership($userId);
-        
-        if ( $membership )
-        {   
+
+        if ($membership) {
             $this->membershipUserDao->delete($membership);
         }
 
@@ -570,11 +511,10 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Returns array of actions not shown on subscribe page
-     * 
+     *
      * @return array
      */
-    public function getSubscribeHiddenActions()
-    {
+    public function getSubscribeHiddenActions() {
         $json = OW::getConfig()->getValue('membership', 'subscribe_hidden_actions');
 
         return mb_strlen($json) ? json_decode($json) : array();
@@ -582,24 +522,22 @@ final class MEMBERSHIP_BOL_MembershipService
 
     /**
      * Sets array of actions not shown on subscribe page
-     * 
+     *
      * @param array $actions
      * @return boolean
      */
-    public function setSubscribeHiddenActions( array $actions = array())
-    {
+    public function setSubscribeHiddenActions(array $actions = array()) {
         OW::getConfig()->saveConfig('membership', 'subscribe_hidden_actions', json_encode($actions));
 
         return true;
     }
 
     /**
-     * Returns the list of group actions for subscribe form 
-     * 
+     * Returns the list of group actions for subscribe form
+     *
      * @return array
      */
-    public function getSubscribePageGroupActionList()
-    {
+    public function getSubscribePageGroupActionList() {
         $service = BOL_AuthorizationService::getInstance();
         $actions = $service->getActionList();
         $groups = $service->getGroupList();
@@ -607,27 +545,22 @@ final class MEMBERSHIP_BOL_MembershipService
 
         $groupActionList = array();
 
-        foreach ( $groups as $group )
-        {
+        foreach ($groups as $group) {
             /* @var $group BOL_AuthorizationGroup */
             $groupActionList[$group->id]['name'] = $group->name;
             $groupActionList[$group->id]['actions'] = array();
         }
 
-        foreach ( $actions as $action )
-        {
+        foreach ($actions as $action) {
             /* @var $action BOL_AuthorizationAction */
-            if ( !in_array($action->id, $hiddenActions) )
-            {
+            if (!in_array($action->id, $hiddenActions)) {
                 $groupActionList[$action->groupId]['actions'][] = $action;
             }
         }
 
         $pm = OW::getPluginManager();
-        foreach ( $groupActionList as $key => $value )
-        {
-            if ( count($value['actions']) === 0 || !$pm->isPluginActive($value['name']) )
-            {
+        foreach ($groupActionList as $key => $value) {
+            if (count($value['actions']) === 0 || !$pm->isPluginActive($value['name'])) {
                 unset($groupActionList[$key]);
             }
         }
@@ -635,57 +568,46 @@ final class MEMBERSHIP_BOL_MembershipService
         return $groupActionList;
     }
 
-    public function getSubsequentRoleIdList()
-    {
+    public function getSubsequentRoleIdList() {
         $accTypeName = OW::getUser()->getUserObject()->getAccountType();
         $accType = BOL_QuestionService::getInstance()->findAccountTypeByName($accTypeName);
         $mTypes = $this->getTypeList($accType->id);
 
         $list = array();
-        foreach ($mTypes as $type) 
-        {
+        foreach ($mTypes as $type) {
             $list[] = $type->roleId;
         }
 
         return $list;
     }
 
-    public function getPromoActionList( $userId, $limit = 3 )
-    {
-        if ( !$userId )
-        {
+    public function getPromoActionList($userId, $limit = 3) {
+        if (!$userId) {
             return null;
         }
 
         $authService = BOL_AuthorizationService::getInstance();
         $userMembership = $this->getUserMembership($userId);
         $roleId = null;
-        if ( $userMembership )
-        {
+        if ($userMembership) {
             $roleId = $this->findTypeById($userMembership->typeId)->roleId;
-        }
-        else
-        {
+        } else {
             $userRoleList = $authService->findUserRoleList($userId);
-            if ( $userRoleList )
-            {
+            if ($userRoleList) {
                 $lastRole = array_pop($userRoleList);
                 $roleId = $lastRole->id;
             }
         }
 
         $roleIdList = $this->getSubsequentRoleIdList();
-        if ( !$roleIdList )
-        {
+        if (!$roleIdList) {
             return null;
         }
 
         $permissions = BOL_AuthorizationService::getInstance()->getPermissionList();
         $currentRoleActions = array();
-        foreach ( $permissions as $permission )
-        {
-            if ( $permission->roleId == $roleId )
-            {
+        foreach ($permissions as $permission) {
+            if ($permission->roleId == $roleId) {
                 $currentRoleActions[] = $permission->actionId;
             }
         }
@@ -694,13 +616,9 @@ final class MEMBERSHIP_BOL_MembershipService
 
         $allowedActions = array();
         $count = 0;
-        foreach ( $permissions as $permission )
-        {
-            if ( in_array($permission->roleId, $roleIdList) && !in_array($permission->actionId, $hiddenActions)
-                && !in_array($permission->actionId, $allowedActions) && !in_array($permission->actionId, $currentRoleActions) )
-            {
-                if ( $count > $limit )
-                {
+        foreach ($permissions as $permission) {
+            if (in_array($permission->roleId, $roleIdList) && !in_array($permission->actionId, $hiddenActions) && !in_array($permission->actionId, $allowedActions) && !in_array($permission->actionId, $currentRoleActions)) {
+                if ($count > $limit) {
                     break;
                 }
                 $allowedActions[] = $permission->actionId;
@@ -717,12 +635,9 @@ final class MEMBERSHIP_BOL_MembershipService
         $groupActionList = $this->getSubscribePageGroupActionList();
 
         $labels = array();
-        foreach ( $groupActionList as $groupAction )
-        {
-            foreach ( $groupAction['actions'] as $action )
-            {
-                if  ( in_array( $action->id, $allowedActions) )
-                {
+        foreach ($groupActionList as $groupAction) {
+            foreach ($groupAction['actions'] as $action) {
+                if (in_array($action->id, $allowedActions)) {
                     $labels[] = isset($dataLabels[$groupAction['name']]) ? $dataLabels[$groupAction['name']]['actions'][$action->name] : null;
                 }
             }
@@ -732,23 +647,19 @@ final class MEMBERSHIP_BOL_MembershipService
     }
 
     /**
-     * Returns list of roles which can be assigned to memberships 
-     * 
+     * Returns list of roles which can be assigned to memberships
+     *
      * @param arary $assignedMemberships
      * @return array
      */
-    public function getRolesAvailableForMembership(array $assignedMemberships = array())
-    {
+    public function getRolesAvailableForMembership(array $assignedMemberships = array()) {
         $authService = BOL_AuthorizationService::getInstance();
 
         $roles = $authService->findNonGuestRoleList();
         $default = $authService->getDefaultRole();
 
-        foreach ( $roles as $key => $role )
-        {
-            if ( $role->id == $default->id 
-                    || ($assignedMemberships && in_array($role->id, $assignedMemberships)) )
-            {
+        foreach ($roles as $key => $role) {
+            if ($role->id == $default->id || ($assignedMemberships && in_array($role->id, $assignedMemberships))) {
                 unset($roles[$key]);
             }
         }
@@ -760,27 +671,22 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $actionId
      * @return bool
      */
-    public function actionCanBePurchased( $actionId )
-    {
-        if ( !$actionId )
-        {
+    public function actionCanBePurchased($actionId) {
+        if (!$actionId) {
             return false;
         }
 
         $memberships = $this->getTypeList();
 
-        if ( !$memberships )
-        {
+        if (!$memberships) {
             return false;
         }
 
-        foreach ( $memberships as $ms )
-        {
+        foreach ($memberships as $ms) {
             /** @var MEMBERSHIP_BOL_MembershipType $ms */
             $perm = BOL_AuthorizationPermissionDao::getInstance()->findByRoleIdAndActionId($ms->roleId, $actionId);
 
-            if ( $perm )
-            {
+            if ($perm) {
                 return true;
             }
         }
@@ -794,10 +700,8 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param int $period
      * @return bool
      */
-    public function addTrialPlanUsage( $userId, $planId, $period = 30 )
-    {
-        if ( !$userId || !$planId )
-        {
+    public function addTrialPlanUsage($userId, $planId, $period = 30) {
+        if (!$userId || !$planId) {
             return false;
         }
 
@@ -812,18 +716,15 @@ final class MEMBERSHIP_BOL_MembershipService
         return true;
     }
 
-    public function getUserTrialPlansUsage( $userId )
-    {
+    public function getUserTrialPlansUsage($userId) {
         $list = $this->membershipUserTrialDao->findListByUserId($userId);
 
         $result = array();
-        if ( !$list )
-        {
+        if (!$list) {
             return $result;
         }
 
-        foreach ( $list as $item )
-        {
+        foreach ($list as $item) {
             $result[] = $item->planId;
         }
 
@@ -834,10 +735,8 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $userId
      * @return bool
      */
-    public function isTrialUsedByUser( $userId )
-    {
-        if ( !$userId )
-        {
+    public function isTrialUsedByUser($userId) {
+        if (!$userId) {
             return false;
         }
 
@@ -846,33 +745,27 @@ final class MEMBERSHIP_BOL_MembershipService
         return (bool) $trial;
     }
 
-    public function deleteUserTrialsByTypeId( $typeId )
-    {
-        if ( !$typeId )
-        {
+    public function deleteUserTrialsByTypeId($typeId) {
+        if (!$typeId) {
             return true;
         }
 
         $plans = $this->membershipPlanDao->findPlanListByTypeId($typeId);
 
-        if ( !$plans )
-        {
+        if (!$plans) {
             return true;
         }
 
-        foreach ( $plans as $plan )
-        {
+        foreach ($plans as $plan) {
             $this->membershipUserTrialDao->deleteByPlanId($plan->id);
         }
 
         return true;
     }
 
-    public function deleteUserTrialsByUserId( $userId )
-    {
+    public function deleteUserTrialsByUserId($userId) {
         $this->membershipUserTrialDao->deleteByUserId($userId);
     }
-
 
     /** === Notifications === */
 
@@ -882,17 +775,14 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $expirationTime
      * @return bool
      */
-    public function sendMembershipPurchasedNotification( $userId, $membershipLabel, $expirationTime )
-    {
-        if ( !$userId )
-        {
+    public function sendMembershipPurchasedNotification($userId, $membershipLabel, $expirationTime) {
+        if (!$userId) {
             return false;
         }
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( !$user )
-        {
+        if (!$user) {
             return false;
         }
 
@@ -910,35 +800,28 @@ final class MEMBERSHIP_BOL_MembershipService
         $text = $lang->text('membership', 'plan_purchase_notification_text', $assigns);
         $html = $lang->text('membership', 'plan_purchase_notification_html', $assigns);
 
-        try
-        {
+        try {
             $mail = OW::getMailer()->createMail()
-                ->addRecipientEmail($email)
-                ->setTextContent($text)
-                ->setHtmlContent($html)
-                ->setSubject($subject);
+                    ->addRecipientEmail($email)
+                    ->setTextContent($text)
+                    ->setHtmlContent($html)
+                    ->setSubject($subject);
 
             OW::getMailer()->send($mail);
-        }
-        catch ( Exception $e )
-        {
+        } catch (Exception $e) {
             return false;
         }
 
         return true;
     }
 
-    public function sendExpirationNotifications( $limit )
-    {
+    public function sendExpirationNotifications($limit) {
         $expireToday = $this->membershipUserDao->getExpiringTodayMemberships($limit);
 
-        if ( $expireToday )
-        {
-            foreach ( $expireToday as $membership )
-            {
+        if ($expireToday) {
+            foreach ($expireToday as $membership) {
                 $type = $this->findTypeById($membership->typeId);
-                if ( !$type )
-                {
+                if (!$type) {
                     $this->deleleUserMembership($membership);
 
                     continue;
@@ -952,13 +835,10 @@ final class MEMBERSHIP_BOL_MembershipService
         $period = (int) OW::getConfig()->getValue('membership', 'notify_period');
         $expireSoon = $this->membershipUserDao->getExpiringSoonMemberships($period, $limit);
 
-        if ( $expireSoon )
-        {
-            foreach ( $expireSoon as $membership )
-            {
+        if ($expireSoon) {
+            foreach ($expireSoon as $membership) {
                 $type = $this->findTypeById($membership->typeId);
-                if ( !$type )
-                {
+                if (!$type) {
                     $this->deleleUserMembership($membership);
 
                     continue;
@@ -975,24 +855,20 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $membershipLabel
      * @return bool
      */
-    public function sendMembershipExpiresNotification( $userId, $membershipLabel )
-    {
-        if ( !$userId )
-        {
+    public function sendMembershipExpiresNotification($userId, $membershipLabel) {
+        if (!$userId) {
             return false;
         }
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( !$user )
-        {
+        if (!$user) {
             return false;
         }
 
         $userMembership = $this->getUserMembership($userId);
 
-        if ( !$userMembership )
-        {
+        if (!$userMembership) {
             return false;
         }
 
@@ -1011,21 +887,18 @@ final class MEMBERSHIP_BOL_MembershipService
         $text = $lang->text('membership', 'plan_expires_notification_text', $assigns);
         $html = $lang->text('membership', 'plan_expires_notification_html', $assigns);
 
-        try
-        {
+        try {
             $mail = OW::getMailer()->createMail()
-                ->addRecipientEmail($email)
-                ->setTextContent($text)
-                ->setHtmlContent($html)
-                ->setSubject($subject);
+                    ->addRecipientEmail($email)
+                    ->setTextContent($text)
+                    ->setHtmlContent($html)
+                    ->setSubject($subject);
 
             OW::getMailer()->send($mail);
 
             $userMembership->expirationNotified = 1;
             $this->membershipUserDao->save($userMembership);
-        }
-        catch ( Exception $e )
-        {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -1037,24 +910,20 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $membershipLabel
      * @return bool
      */
-    public function sendMembershipExpiresTodayNotification( $userId, $membershipLabel )
-    {
-        if ( !$userId )
-        {
+    public function sendMembershipExpiresTodayNotification($userId, $membershipLabel) {
+        if (!$userId) {
             return false;
         }
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( !$user )
-        {
+        if (!$user) {
             return false;
         }
 
         $userMembership = $this->getUserMembership($userId);
 
-        if ( !$userMembership )
-        {
+        if (!$userMembership) {
             return false;
         }
 
@@ -1071,21 +940,18 @@ final class MEMBERSHIP_BOL_MembershipService
         $text = $lang->text('membership', 'plan_expires_today_notification_text', $assigns);
         $html = $lang->text('membership', 'plan_expires_today_notification_html', $assigns);
 
-        try
-        {
+        try {
             $mail = OW::getMailer()->createMail()
-                ->addRecipientEmail($email)
-                ->setTextContent($text)
-                ->setHtmlContent($html)
-                ->setSubject($subject);
+                    ->addRecipientEmail($email)
+                    ->setTextContent($text)
+                    ->setHtmlContent($html)
+                    ->setSubject($subject);
 
             OW::getMailer()->send($mail);
 
             $userMembership->expirationNotified = 2;
             $this->membershipUserDao->save($userMembership);
-        }
-        catch ( Exception $e )
-        {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -1097,17 +963,14 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $membershipLabel
      * @return bool
      */
-    public function sendMembershipExpiredNotification( $userId, $membershipLabel )
-    {
-        if ( !$userId )
-        {
+    public function sendMembershipExpiredNotification($userId, $membershipLabel) {
+        if (!$userId) {
             return false;
         }
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( !$user )
-        {
+        if (!$user) {
             return false;
         }
 
@@ -1124,18 +987,15 @@ final class MEMBERSHIP_BOL_MembershipService
         $text = $lang->text('membership', 'plan_expired_notification_text', $assigns);
         $html = $lang->text('membership', 'plan_expired_notification_html', $assigns);
 
-        try
-        {
+        try {
             $mail = OW::getMailer()->createMail()
-                ->addRecipientEmail($email)
-                ->setTextContent($text)
-                ->setHtmlContent($html)
-                ->setSubject($subject);
+                    ->addRecipientEmail($email)
+                    ->setTextContent($text)
+                    ->setHtmlContent($html)
+                    ->setSubject($subject);
 
             OW::getMailer()->send($mail);
-        }
-        catch ( Exception $e )
-        {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -1147,17 +1007,14 @@ final class MEMBERSHIP_BOL_MembershipService
      * @param $membershipLabel
      * @return bool
      */
-    public function sendMembershipRenewedNotification( $userId, $membershipLabel )
-    {
-        if ( !$userId )
-        {
+    public function sendMembershipRenewedNotification($userId, $membershipLabel) {
+        if (!$userId) {
             return false;
         }
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( !$user )
-        {
+        if (!$user) {
             return false;
         }
 
@@ -1174,36 +1031,30 @@ final class MEMBERSHIP_BOL_MembershipService
         $text = $lang->text('membership', 'plan_renewed_notification_text', $assigns);
         $html = $lang->text('membership', 'plan_renewed_notification_html', $assigns);
 
-        try
-        {
+        try {
             $mail = OW::getMailer()->createMail()
-                ->addRecipientEmail($email)
-                ->setTextContent($text)
-                ->setHtmlContent($html)
-                ->setSubject($subject);
+                    ->addRecipientEmail($email)
+                    ->setTextContent($text)
+                    ->setHtmlContent($html)
+                    ->setSubject($subject);
 
             OW::getMailer()->send($mail);
-        }
-        catch ( Exception $e )
-        {
+        } catch (Exception $e) {
             return false;
         }
 
         return true;
     }
 
-    public static function formatDate( array $params, $smarty )
-    {
+    public static function formatDate(array $params, $smarty) {
         $timeStamp = (int) $params['timestamp'];
         $onlyDate = null;
 
-        if ( !$timeStamp )
-        {
+        if (!$timeStamp) {
             return '_INVALID_TS_';
         }
 
-        if ( !(bool) OW::getConfig()->getValue('base', 'site_use_relative_time') )
-        {
+        if (!(bool) OW::getConfig()->getValue('base', 'site_use_relative_time')) {
             return UTIL_DateTime::formatSimpleDate($timeStamp, $onlyDate);
         }
 
@@ -1219,12 +1070,9 @@ final class MEMBERSHIP_BOL_MembershipService
         $isTomorrow = ( date('j', $timeStamp) - date('j', $currentTs) ) === 1;
         $isYesterday = ( date('j', $currentTs) - date('j', $timeStamp) ) === 1;
 
-        if ( $isCurrentMonth && $isCurrentYear )
-        {
-            if ( $isCurrentDay )
-            {
-                if ( $onlyDate )
-                {
+        if ($isCurrentMonth && $isCurrentYear) {
+            if ($isCurrentDay) {
+                if ($onlyDate) {
                     return $language->text('base', 'date_time_today');
                 }
 
@@ -1232,8 +1080,7 @@ final class MEMBERSHIP_BOL_MembershipService
                 $past = $seconds >= 0;
                 $seconds = abs($seconds);
 
-                switch ( true )
-                {
+                switch (true) {
                     case $seconds < 60:
                         return $language->text('base', 'date_time_within_one_minute');
 
@@ -1251,20 +1098,14 @@ final class MEMBERSHIP_BOL_MembershipService
                         $data = array('hours' => floor($seconds / 3600));
                         return $past ? $language->text('base', 'date_time_hours_ago', $data) : $language->text('membership', 'date_time_in_hours', $data);
                 }
-            }
-            else if ( $isYesterday )
-            {
-                if ( $onlyDate )
-                {
+            } else if ($isYesterday) {
+                if ($onlyDate) {
                     return $language->text('base', 'date_time_yesterday');
                 }
 
                 return $language->text('base', 'date_time_yesterday') . ', ' . ( $militaryTime ? strftime("%H:%M", $timeStamp) : strftime("%I:%M%p", $timeStamp) );
-            }
-            else if ( $isTomorrow )
-            {
-                if ( $onlyDate )
-                {
+            } else if ($isTomorrow) {
+                if ($onlyDate) {
                     return $language->text('membership', 'date_time_tomorrow');
                 }
 
@@ -1272,11 +1113,12 @@ final class MEMBERSHIP_BOL_MembershipService
             }
         }
 
-        if ( $onlyDate === null )
-        {
+        if ($onlyDate === null) {
             $onlyDate = true;
         }
 
         return UTIL_DateTime::formatSimpleDate($timeStamp, $onlyDate);
     }
+
 }
+

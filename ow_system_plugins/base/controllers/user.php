@@ -27,23 +27,20 @@
  * @package ow.ow_system_plugins.base.controllers
  * @since 1.0
  */
-class BASE_CTRL_User extends OW_ActionController
-{
+class BASE_CTRL_User extends OW_ActionController {
+
     /**
      * @var BOL_UserService
      */
     private $userService;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->userService = BOL_UserService::getInstance();
     }
 
-    public function forgotPassword()
-    {
-        if ( OW::getUser()->isAuthenticated() )
-        {
+    public function forgotPassword() {
+        if (OW::getUser()->isAuthenticated()) {
             $this->redirect(OW_URL_HOME);
         }
 
@@ -57,37 +54,28 @@ class BASE_CTRL_User extends OW_ActionController
 
         OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate(OW_MasterPage::TEMPLATE_BLANK));
 
-        if ( OW::getRequest()->isPost() )
-        {
-            if ( $form->isValid($_POST) )
-            {
+        if (OW::getRequest()->isPost()) {
+            if ($form->isValid($_POST)) {
                 $data = $form->getValues();
 
-                try
-                {
+                try {
                     $this->userService->processResetForm($data);
-                }
-                catch ( LogicException $e )
-                {
+                } catch (LogicException $e) {
                     OW::getFeedback()->error($e->getMessage());
                     $this->redirect();
                 }
 
                 OW::getFeedback()->info($language->text('base', 'forgot_password_success_message'));
                 $this->redirect();
-            }
-            else
-            {
+            } else {
                 OW::getFeedback()->error($language->text('base', 'forgot_password_general_error_message'));
                 $this->redirect();
             }
         }
     }
 
-    public function resetPasswordRequest()
-    {
-        if ( OW::getUser()->isAuthenticated() )
-        {
+    public function resetPasswordRequest() {
+        if (OW::getUser()->isAuthenticated()) {
             $this->redirect(OW::getRouter()->urlForRoute('base_member_dashboard'));
         }
 
@@ -98,57 +86,47 @@ class BASE_CTRL_User extends OW_ActionController
 
         OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate(OW_MasterPage::TEMPLATE_BLANK));
 
-        if ( OW::getRequest()->isPost() )
-        {
-            if ( $form->isValid($_POST) )
-            {
+        if (OW::getRequest()->isPost()) {
+            if ($form->isValid($_POST)) {
                 $data = $form->getValues();
 
                 $resetPassword = $this->userService->findResetPasswordByCode($data['code']);
 
-                if ( $resetPassword === null )
-                {
+                if ($resetPassword === null) {
                     OW::getFeedback()->error(OW::getLanguage()->text('base', 'reset_password_request_invalid_code_error_message'));
                     $this->redirect();
                 }
 
                 $this->redirect(OW::getRouter()->urlForRoute('base.reset_user_password', array('code' => $resetPassword->getCode())));
-            }
-            else
-            {
+            } else {
                 OW::getFeedback()->error(OW::getLanguage()->text('base', 'reset_password_request_invalid_code_error_message'));
                 $this->redirect();
             }
         }
     }
 
-    public function resetPassword( $params )
-    {
+    public function resetPassword($params) {
         $language = OW::getLanguage();
 
-        if ( OW::getUser()->isAuthenticated() )
-        {
+        if (OW::getUser()->isAuthenticated()) {
             $this->redirect(OW::getRouter()->urlForRoute('base_member_dashboard'));
         }
 
         $this->setPageHeading($language->text('base', 'reset_password_heading'));
 
-        if ( empty($params['code']) )
-        {
+        if (empty($params['code'])) {
             throw new Redirect404Exception();
         }
 
         $resetCode = $this->userService->findResetPasswordByCode($params['code']);
 
-        if ( $resetCode == null )
-        {
+        if ($resetCode == null) {
             throw new RedirectException(OW::getRouter()->urlForRoute('base.reset_user_password_expired_code'));
         }
 
         $user = $this->userService->findUserById($resetCode->getUserId());
 
-        if ( $user === null )
-        {
+        if ($user === null) {
             throw new Redirect404Exception();
         }
 
@@ -159,50 +137,39 @@ class BASE_CTRL_User extends OW_ActionController
 
         OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate(OW_MasterPage::TEMPLATE_BLANK));
 
-        if ( OW::getRequest()->isPost() )
-        {
-            if ( $form->isValid($_POST) )
-            {
+        if (OW::getRequest()->isPost()) {
+            if ($form->isValid($_POST)) {
                 $data = $form->getValues();
 
-                try
-                {
+                try {
                     $this->userService->processResetPasswordForm($data, $user, $resetCode);
-                }
-                catch ( LogicException $e )
-                {
+                } catch (LogicException $e) {
                     OW::getFeedback()->error($e->getMessage());
                     $this->redirect();
                 }
 
                 OW::getFeedback()->info(OW::getLanguage()->text('base', 'reset_password_success_message'));
                 $this->redirect(OW::getRouter()->urlForRoute('static_sign_in'));
-            }
-            else
-            {
+            } else {
                 OW::getFeedback()->error('Invalid Data');
                 $this->redirect();
             }
         }
     }
 
-    public function resetPasswordCodeExpired()
-    {
+    public function resetPasswordCodeExpired() {
         $this->setPageHeading(OW::getLanguage()->text('base', 'reset_password_code_expired_cap_label'));
         $this->setPageHeadingIconClass('ow_ic_info');
         $this->assign('text', OW::getLanguage()->text('base', 'reset_password_code_expired_text', array('url' => OW::getRouter()->urlForRoute('base_forgot_password'))));
         OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate(OW_MasterPage::TEMPLATE_BLANK));
     }
 
-    public function standardSignIn()
-    {
-        if ( OW::getRequest()->isAjax() )
-        {
+    public function standardSignIn() {
+        if (OW::getRequest()->isAjax()) {
             exit(json_encode(array()));
         }
 
-        if ( OW::getUser()->isAuthenticated() )
-        {
+        if (OW::getUser()->isAuthenticated()) {
             throw new RedirectException(OW::getRouter()->getBaseUrl());
         }
 
@@ -212,33 +179,25 @@ class BASE_CTRL_User extends OW_ActionController
 
         $this->addComponent('sign_in_form', new BASE_CMP_SignIn());
 
-        if ( OW::getRequest()->isPost() )
-        {
-            try
-            {
+        if (OW::getRequest()->isPost()) {
+            try {
                 $result = $this->processSignIn();
-            }
-            catch ( LogicException $e )
-            {
+            } catch (LogicException $e) {
                 OW::getFeedback()->error('Invalid data submitted!');
                 $this->redirect();
             }
 
             $message = implode('', $result->getMessages());
 
-            if ( $result->isValid() )
-            {
+            if ($result->isValid()) {
                 OW::getFeedback()->info($message);
 
-                if ( empty($_GET['back-uri']) )
-                {
+                if (empty($_GET['back-uri'])) {
                     $this->redirect();
                 }
 
                 $this->redirect(OW::getRouter()->getBaseUrl() . urldecode($_GET['back-uri']));
-            }
-            else
-            {
+            } else {
                 OW::getFeedback()->error($message);
                 $this->redirect();
             }
@@ -247,37 +206,27 @@ class BASE_CTRL_User extends OW_ActionController
         $this->setDocumentKey('base_sign_in');
     }
 
-    public function ajaxSignIn()
-    {
-        if ( !OW::getRequest()->isAjax() )
-        {
+    public function ajaxSignIn() {
+        if (!OW::getRequest()->isAjax()) {
             throw new Redirect404Exception();
         }
 
-        if ( OW::getRequest()->isPost() )
-        {
-            try
-            {
+        if (OW::getRequest()->isPost()) {
+            try {
                 $result = $this->processSignIn();
-            }
-            catch ( LogicException $e )
-            {
+            } catch (LogicException $e) {
                 exit(json_encode(array('result' => false, 'message' => 'Error!')));
             }
 
             $message = '';
 
-            foreach ( $result->getMessages() as $value )
-            {
+            foreach ($result->getMessages() as $value) {
                 $message .= $value;
             }
 
-            if ( $result->isValid() )
-            {
+            if ($result->isValid()) {
                 exit(json_encode(array('result' => true, 'message' => $message)));
-            }
-            else
-            {
+            } else {
                 exit(json_encode(array('result' => false, 'message' => $message)));
             }
 
@@ -287,18 +236,17 @@ class BASE_CTRL_User extends OW_ActionController
         exit(json_encode(array()));
     }
 
-    public function signOut()
-    {
+    public function signOut() {
 
         OW::getUser()->logout();
 
-        if ( isset($_COOKIE['ow_login']) )
-        {
+        if (isset($_COOKIE['ow_login'])) {
             setcookie('ow_login', '', time() - 3600, '/');
         }
         OW::getSession()->set('no_autologin', true);
         $this->redirect(OW::getRouter()->getBaseUrl());
     }
+
 //    public static function getSignInForm( $submitDecorator = 'button' )
 //    {
 //        $form = new Form('sign-in');
@@ -332,12 +280,11 @@ class BASE_CTRL_User extends OW_ActionController
     /**
      * @return OW_AuthResult
      */
-    private function processSignIn()
-    {
+    private function processSignIn() {
+
         $form = $this->userService->getSignInForm();
 
-        if ( !$form->isValid($_POST) )
-        {
+        if (!$form->isValid($_POST)) {
             throw new LogicException();
         }
 
@@ -345,17 +292,14 @@ class BASE_CTRL_User extends OW_ActionController
         return $this->userService->processSignIn($data['identity'], $data['password'], isset($data['remember']));
     }
 
-    public function controlFeatured( $params )
-    {
+    public function controlFeatured($params) {
         $service = BOL_UserService::getInstance();
 
-        if ( (!OW::getUser()->isAuthenticated() || !OW::getUser()->isAuthorized('base') ) || ($userId = intval($params['id'])) <= 0 )
-        {
+        if ((!OW::getUser()->isAuthenticated() || !OW::getUser()->isAuthorized('base') ) || ($userId = intval($params['id'])) <= 0) {
             exit;
         }
 
-        switch ( $params['command'] )
-        {
+        switch ($params['command']) {
             case 'mark':
 
                 $service->markAsFeatured($userId);
@@ -374,16 +318,13 @@ class BASE_CTRL_User extends OW_ActionController
         $this->redirect($_GET['backUrl']);
     }
 
-    public function updateActivity( $params )
-    {
+    public function updateActivity($params) {
         // activity already updated
         exit;
     }
 
-    public function deleteUser( $params )
-    {
-        if ( !OW::getRequest()->isAjax() )
-        {
+    public function deleteUser($params) {
+        if (!OW::getRequest()->isAjax()) {
             throw new Redirect404Exception();
         }
 
@@ -391,15 +332,13 @@ class BASE_CTRL_User extends OW_ActionController
 
         $user = BOL_UserService::getInstance()->findUserById($userId);
 
-        if ( $user === null || !OW::getUser()->isAuthorized('base') )
-        {
+        if ($user === null || !OW::getUser()->isAuthorized('base')) {
             exit(json_encode(array(
                 'result' => 'error'
             )));
         }
 
-        if ( BOL_AuthorizationService::getInstance()->isActionAuthorizedForUser($userId, BOL_AuthorizationService::ADMIN_GROUP_NAME) )
-        {
+        if (BOL_AuthorizationService::getInstance()->isActionAuthorizedForUser($userId, BOL_AuthorizationService::ADMIN_GROUP_NAME)) {
             exit(json_encode(array(
                 'message' => OW::getLanguage()->text('base', 'cannot_delete_admin_user_message'),
                 'result' => 'error'
@@ -413,8 +352,7 @@ class BASE_CTRL_User extends OW_ActionController
 
         $successMessage = OW::getLanguage()->text('base', 'user_deleted_page_message');
 
-        if ( !empty($_GET['showMessage']) )
-        {
+        if (!empty($_GET['showMessage'])) {
             OW::getFeedback()->info($successMessage);
         }
 
@@ -424,15 +362,12 @@ class BASE_CTRL_User extends OW_ActionController
         )));
     }
 
-    public function userDeleted()
-    {//TODO do smth
+    public function userDeleted() {//TODO do smth
         //OW::getDocument()->getMasterPage()->setTemplate(OW::getThemeManager()->getMasterPageTemplate(OW_MasterPage::TEMPLATE_BLANK));
     }
 
-    public function approve( $params )
-    {
-        if ( !OW::getUser()->isAuthorized('base') )
-        {
+    public function approve($params) {
+        if (!OW::getUser()->isAuthorized('base')) {
             throw new Redirect404Exception();
         }
 
@@ -440,10 +375,8 @@ class BASE_CTRL_User extends OW_ActionController
 
         $userService = BOL_UserService::getInstance();
 
-        if ( $user = $userService->findUserById($userId) )
-        {
-            if ( !$userService->isApproved($userId) )
-            {
+        if ($user = $userService->findUserById($userId)) {
+            if (!$userService->isApproved($userId)) {
                 $userService->approve($userId);
                 $userService->sendApprovalNotification($userId);
 
@@ -451,21 +384,16 @@ class BASE_CTRL_User extends OW_ActionController
             }
         }
 
-        if ( empty($_SERVER['HTTP_REFERER']) )
-        {
+        if (empty($_SERVER['HTTP_REFERER'])) {
             $username = $userService->getUserName($userId);
             $this->redirect(OW::getRouter()->urlForRoute('base_user_profile', array('username' => $username)));
-        }
-        else
-        {
+        } else {
             $this->redirect($_SERVER['HTTP_REFERER']);
         }
     }
 
-    public function updateUserRoles()
-    {
-        if ( !OW::getUser()->isAuthorized('base') )
-        {
+    public function updateUserRoles() {
+        if (!OW::getUser()->isAuthorized('base')) {
             exit(json_encode(array(
                 'result' => 'error',
                 'message' => 'Not Authorized'
@@ -474,16 +402,13 @@ class BASE_CTRL_User extends OW_ActionController
 
         $user = BOL_UserService::getInstance()->findUserById((int) $_POST['userId']);
 
-        if ( $user === null )
-        {
+        if ($user === null) {
             exit(json_encode(array('result' => 'error', 'mesaage' => 'Empty user')));
         }
 
         $roles = array();
-        foreach ( $_POST['roles'] as $roleId => $onoff )
-        {
-            if ( !empty($onoff) )
-            {
+        foreach ($_POST['roles'] as $roleId => $onoff) {
+            if (!empty($onoff)) {
                 $roles[] = $roleId;
             }
         }
@@ -491,8 +416,7 @@ class BASE_CTRL_User extends OW_ActionController
         $aService = BOL_AuthorizationService::getInstance();
         $aService->deleteUserRolesByUserId($user->getId());
 
-        foreach ( $roles as $roleId )
-        {
+        foreach ($roles as $roleId) {
             $aService->saveUserRole($user->getId(), $roleId);
         }
 
@@ -502,14 +426,11 @@ class BASE_CTRL_User extends OW_ActionController
         )));
     }
 
-    public function block( $params )
-    {
-        if ( empty($params['id']) )
-        {
+    public function block($params) {
+        if (empty($params['id'])) {
             exit;
         }
-        if ( !OW::getUser()->isAuthenticated() )
-        {
+        if (!OW::getUser()->isAuthenticated()) {
             throw new AuthenticateException();
         }
         $userId = (int) $params['id'];
@@ -522,14 +443,11 @@ class BASE_CTRL_User extends OW_ActionController
         $this->redirect($_GET['backUrl']);
     }
 
-    public function unblock( $params )
-    {
-        if ( empty($params['id']) )
-        {
+    public function unblock($params) {
+        if (empty($params['id'])) {
             exit;
         }
-        if ( !OW::getUser()->isAuthenticated() )
-        {
+        if (!OW::getUser()->isAuthenticated()) {
             throw new AuthenticateException();
         }
         $id = (int) $params['id'];
@@ -541,4 +459,5 @@ class BASE_CTRL_User extends OW_ActionController
 
         $this->redirect($_GET['backUrl']);
     }
+
 }

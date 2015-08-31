@@ -16,61 +16,54 @@
  * @package ow.ow_plugins.membership.components
  * @since 1.0
  */
-class MEMBERSHIP_CMP_MyMembershipWidget extends BASE_CLASS_Widget
-{
+class MEMBERSHIP_CMP_MyMembershipWidget extends BASE_CLASS_Widget {
+
     private $membershipService;
 
     /**
      * Class constructor
      */
-    public function __construct( BASE_CLASS_WidgetParameter $paramObj )
-    {
+    public function __construct(BASE_CLASS_WidgetParameter $paramObj) {
         parent::__construct();
 
         $this->membershipService = MEMBERSHIP_BOL_MembershipService::getInstance();
-        
-        $userId = OW::getUser()->getId();
-        
-        if ( !$userId )
-        {
-            $this->setVisible(false); 
-            return;
-        }
-        
-        $membership = $this->membershipService->getUserMembership($userId);
 
-        if ( !$membership )
-        {
+        $userId = OW::getUser()->getId();
+
+        if (!$userId) {
             $this->setVisible(false);
             return;
         }
-        
+
+        $membership = $this->membershipService->getUserMembership($userId);
+
+        if (!$membership) {
+            $this->setVisible(false);
+            return;
+        }
+
         $this->assign('membership', $membership);
-        
+
         $type = $this->membershipService->findTypeById($membership->typeId);
-        if ( $type )
-        {
+        if ($type) {
             $this->assign('title', $this->membershipService->getMembershipTitle($type->roleId));
         }
-        
+
         $this->setSettingValue(
-            self::SETTING_TOOLBAR,
+                self::SETTING_TOOLBAR, array(
             array(
-                array(
-                    'label' => OW::getLanguage()->text('membership', 'subscribe'),
-                    'href' => OW::getRouter()->urlForRoute('membership_subscribe')
-                )
+                'label' => OW::getLanguage()->text('membership', 'subscribe'),
+                'href' => OW::getRouter()->urlForRoute('membership_subscribe')
             )
+                )
         );
     }
 
-    public static function getAccess()
-    {
+    public static function getAccess() {
         return self::ACCESS_MEMBER;
     }
 
-    public static function getStandardSettingValueList()
-    {
+    public static function getStandardSettingValueList() {
         return array(
             self::SETTING_TITLE => OW::getLanguage()->text('membership', 'my_membership'),
             self::SETTING_ICON => self::ICON_USER,
@@ -78,4 +71,6 @@ class MEMBERSHIP_CMP_MyMembershipWidget extends BASE_CLASS_Widget
             self::SETTING_WRAP_IN_BOX => true
         );
     }
+
 }
+

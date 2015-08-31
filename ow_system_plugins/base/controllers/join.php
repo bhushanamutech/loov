@@ -251,6 +251,37 @@ class BASE_CTRL_Join extends OW_ActionController {
             } else {
                 OW::getFeedback()->error($language->text('base', 'join_join_error'));
             }
+            $billingService = BOL_BillingService::getInstance();
+            $membershipService = MEMBERSHIP_BOL_MembershipService::getInstance();
+
+//$url = OW::getRouter()->urlForRoute('membership_subscribe');
+            $lang = OW::getLanguage();
+            $planId = 16;
+            $userId = $user->id;
+            if (!$plan = $membershipService->findPlanById($planId)) {
+
+                $message = $lang->text('membership', 'plan_not_found');
+//            OW::getApplication()->redirect($url);
+                $this->jsonEncodeResponse(array("status" => "false", "message" => $message));
+            }
+
+            if ($plan->price == 0) { // trial plan
+// check if trial plan used
+                $used = $membershipService->isTrialUsedByUser($userId);
+                if ($used) {
+                    $message = $lang->text('membership', 'trial_used_error');
+                } else { // give trial plan
+                    $userMembership = new MEMBERSHIP_BOL_MembershipUser();
+                    $userMembership->userId = $userId;
+                    $userMembership->typeId = $plan->typeId;
+                    $userMembership->expirationStamp = time() + (int) $plan->period * 3600 * 24;
+                    $userMembership->recurring = 0;
+                    $userMembership->trial = 1;
+
+                    $membershipService->setUserMembership($userMembership);
+                    $membershipService->addTrialPlanUsage($userId, $plan->id, $plan->period);
+                }
+            }
         } else {
             OW::getFeedback()->error($language->text('base', 'join_join_error'));
         }
@@ -323,6 +354,7 @@ class JoinForm extends BASE_CLASS_UserQuestionForm {
         $joinSubmit = new Submit('joinSubmit');
         $joinSubmit->addAttribute('class', 'ow_button ow_ic_submit');
         $joinSubmit->setValue($joinSubmitLabel);
+
         $this->addElement($joinSubmit);
 
         if ($this->displayAccountType) {
@@ -678,6 +710,7 @@ class JoinForm extends BASE_CLASS_UserQuestionForm {
 
         $event = new OW_Event('join.get_captcha_field');
         OW::getEventManager()->trigger($event);
+
         $captchaField = $event->getData();
 
         $displayCaptcha = false;

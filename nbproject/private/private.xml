@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/controllers/join.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/controllers/user.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/bol/authorization_role_dao.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/components/set_membership.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/bol/membership_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/bol/membership_user_dao.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/controllers/subscribe.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/skadate/controllers/join.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/billing_paypal/init.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/billing_paypal/controllers/order.php</file>
+        <file>file:/E:/wamp/www/loov/ow_system_plugins/base/bol/billing_service.php</file>
+        <file>file:/E:/wamp/www/loov/ow_plugins/membership/controllers/admin.php</file>
+    </open-files>
 </project-private>

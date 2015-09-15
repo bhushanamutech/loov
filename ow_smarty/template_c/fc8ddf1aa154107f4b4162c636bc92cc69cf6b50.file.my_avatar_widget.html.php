@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:48:51
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:50
          compiled from "E:\wamp\www\loov\ow_system_plugins\base\views\components\my_avatar_widget.html" */ ?>
-<?php /*%%SmartyHeaderCode:3265055daf6934d5887-07588398%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:302755f6d47a6b5ea4-22283996%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3265055daf6934d5887-07588398',
+  'nocache_hash' => '302755f6d47a6b5ea4-22283996',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf693500812_73019972',
+  'unifunc' => 'content_55f6d47a6e0e37_51654916',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf693500812_73019972')) {function content_55daf693500812_73019972($_smarty_tpl) {?><?php if (!is_callable('smarty_function_decorator')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.decorator.php';
+<?php if ($_valid && !is_callable('content_55f6d47a6e0e37_51654916')) {function content_55f6d47a6e0e37_51654916($_smarty_tpl) {?><?php if (!is_callable('smarty_function_decorator')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.decorator.php';
 ?>
 <div class="ow_my_avatar_widget clearfix">
 	<div class="ow_left ow_my_avatar_img"><?php echo smarty_function_decorator(array('name'=>'avatar_item','data'=>$_smarty_tpl->tpl_vars['avatar']->value),$_smarty_tpl);?>

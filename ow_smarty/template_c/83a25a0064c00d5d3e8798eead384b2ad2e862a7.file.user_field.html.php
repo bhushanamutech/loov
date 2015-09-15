@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:48:51
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:49
          compiled from "E:\wamp\www\loov\ow_plugins\mailbox\views\components\user_field.html" */ ?>
-<?php /*%%SmartyHeaderCode:2803555daf6931148a8-43563396%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1537255f6d479d9f531-22974501%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2803555daf6931148a8-43563396',
+  'nocache_hash' => '1537255f6d479d9f531-22974501',
   'function' => 
   array (
   ),
@@ -22,9 +22,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf69313b9b3_88245087',
+  'unifunc' => 'content_55f6d479dca4c4_26300045',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf69313b9b3_88245087')) {function content_55daf69313b9b3_88245087($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
+<?php if ($_valid && !is_callable('content_55f6d479dca4c4_26300045')) {function content_55f6d479dca4c4_26300045($_smarty_tpl) {?><?php if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
 ?><?php echo $_smarty_tpl->tpl_vars['input']->value;?>
 
 <input name="mailbox_new_message_user" id="mailbox_new_message_user" type="text" class="invitation userFieldInputControl" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="<?php echo smarty_function_text(array('key'=>'mailbox+to'),$_smarty_tpl);?>

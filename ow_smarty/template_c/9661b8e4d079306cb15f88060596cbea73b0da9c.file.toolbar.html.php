@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:48:50
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:49
          compiled from "E:\wamp\www\loov\ow_plugins\mailbox\views\components\toolbar.html" */ ?>
-<?php /*%%SmartyHeaderCode:1582455daf692bf98a3-28445594%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3197355f6d479aebe10-96087717%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1582455daf692bf98a3-28445594',
+  'nocache_hash' => '3197355f6d479aebe10-96087717',
   'function' => 
   array (
   ),
@@ -27,9 +27,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf692ce7d55_93707507',
+  'unifunc' => 'content_55f6d479b843b6_16065308',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf692ce7d55_93707507')) {function content_55daf692ce7d55_93707507($_smarty_tpl) {?><?php if (!is_callable('smarty_function_component')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.component.php';
+<?php if ($_valid && !is_callable('content_55f6d479b843b6_16065308')) {function content_55f6d479b843b6_16065308($_smarty_tpl) {?><?php if (!is_callable('smarty_function_component')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.component.php';
 if (!is_callable('smarty_function_text')) include 'E:\\wamp\\www\\loov\\ow_smarty\\plugin\\function.text.php';
 ?><?php if ($_smarty_tpl->tpl_vars['chatModeEnabled']->value){?>
 <?php echo smarty_function_component(array('class'=>"MAILBOX_CMP_ChatUserList"),$_smarty_tpl);?>

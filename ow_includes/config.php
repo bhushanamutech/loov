@@ -30,10 +30,10 @@ define('OW_USE_CLOUDFILES', false);
 
 if (defined('OW_CRON')) {
     define('OW_DEBUG_MODE', false);
-    define('OW_DEV_MODE', false);
+    define('OW_DEV_MODE', true);
     define('OW_PROFILER_ENABLE', false);
 } else {
     define('OW_DEBUG_MODE', false);
-    define('OW_DEV_MODE', false);
+    define('OW_DEV_MODE', true);
     define('OW_PROFILER_ENABLE', false);
 }

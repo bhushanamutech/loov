@@ -24,10 +24,10 @@
                     <div class="ow_header_pic_wrap header_bg-index">
                         <div class="ow_header_pic logo_img"><a href="{$siteUrl}" class="logo_url"></a></div>
                     </div>
-                    <div class="index_qs_widget">
+<!--                    <div class="index_qs_widget">
                         {component class='USEARCH_CMP_QuickSearchIndex' cssClass='quick_search_box'}
-                        <!--                        {component class='BASE_CMP_JoinButton' cssClass='index_join_button'}-->
-                    </div>
+                                                {component class='BASE_CMP_JoinButton' cssClass='index_join_button'}
+                    </div>-->
                 </div>
                 <div class="ow_page_container clearfix">
                     <div class="ow_canvas">
@@ -38,26 +38,6 @@
             </div>
         </div>
     </div>
-    <div class="ow_menu_wrap custom_menu">{$main_menu}</div>
-    <div id="jcl-demo">
-        <div class="custom-container nonCircular">
-            <a href="#" class="prev left_icon">&lsaquo;</a>
-            <div class="carousel">
-                <ul>
-                    {foreach from=$womanList item='woman'}
-                    <li>
-                        <a href="{$site_url}user/{$woman.user_name}"><img src="{$woman.profile_picture}">
-                            <!--                            <span>{$item.label}</span>-->
-                        </a>
-                    </li>
-                    {/foreach}
-                </ul>
-            </div>
-            <a href="#" class="next right_icon">&rsaquo;</a>
-            <div class="clear"></div>
-        </div>
-    </div>
-
     <div class="ow_footer">
         <div class="ow_canvas">
             <div class="ow_page clearfix footer_width">

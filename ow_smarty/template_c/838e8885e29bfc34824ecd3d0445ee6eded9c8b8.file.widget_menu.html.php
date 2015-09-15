@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:40
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:48
          compiled from "E:\wamp\www\loov\ow_system_plugins\base\views\components\widget_menu.html" */ ?>
-<?php /*%%SmartyHeaderCode:2711055daf25057fd90-42701672%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3147355f6d478f29a87-99372102%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2711055daf25057fd90-42701672',
+  'nocache_hash' => '3147355f6d478f29a87-99372102',
   'function' => 
   array (
   ),
@@ -22,9 +22,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf2505cdfa1_58872621',
+  'unifunc' => 'content_55f6d479041414_30699220',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf2505cdfa1_58872621')) {function content_55daf2505cdfa1_58872621($_smarty_tpl) {?><div class="clearfix">
+<?php if ($_valid && !is_callable('content_55f6d479041414_30699220')) {function content_55f6d479041414_30699220($_smarty_tpl) {?><div class="clearfix">
     <div class="ow_box_menu">
         <?php  $_smarty_tpl->tpl_vars['tab'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tab']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['items']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}

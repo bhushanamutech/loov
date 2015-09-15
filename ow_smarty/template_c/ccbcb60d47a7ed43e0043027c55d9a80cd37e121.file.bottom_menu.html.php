@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:40
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:49
          compiled from "E:\wamp\www\loov\ow_system_plugins\base\views\components\bottom_menu.html" */ ?>
-<?php /*%%SmartyHeaderCode:440555daf250e22ea1-57098784%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1646355f6d4799365b6-60201312%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ccbcb60d47a7ed43e0043027c55d9a80cd37e121' => 
     array (
       0 => 'E:\\wamp\\www\\loov\\ow_system_plugins\\base\\views\\components\\bottom_menu.html',
-      1 => 1440396934,
+      1 => 1442237327,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '440555daf250e22ea1-57098784',
+  'nocache_hash' => '1646355f6d4799365b6-60201312',
   'function' => 
   array (
   ),
@@ -22,9 +22,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf250e887b2_56924915',
+  'unifunc' => 'content_55f6d4799bb2c9_45030533',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf250e887b2_56924915')) {function content_55daf250e887b2_56924915($_smarty_tpl) {?><div class="ow_footer_menu bottom_menu_vertical">
+<?php if ($_valid && !is_callable('content_55f6d4799bb2c9_45030533')) {function content_55f6d4799bb2c9_45030533($_smarty_tpl) {?><div class="ow_footer_menu bottom_menu_vertical">
     <?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['item']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
  $_smarty_tpl->tpl_vars['item']->total= $_smarty_tpl->_count($_from);
@@ -46,6 +46,15 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 </div>
 <div class="our_app">
     <h3>Our Apps</h3>
-    <span>iPhone</span><br>
-    <span>Android</span>
+<!--    <span>iPhone1</span>-->
+<span>
+    <img class="iso-img" src="<?php echo $_smarty_tpl->tpl_vars['item']->value['site_url'];?>
+ow_static/themes/morning/img/ios.png">
+</span>
+    <br>
+    <span>
+    <img src="<?php echo $_smarty_tpl->tpl_vars['item']->value['site_url'];?>
+ow_static/themes/morning/img/androidlogo-png.png">
+</span>
+<!--    <span>Android1</span>-->
 </div><?php }} ?>

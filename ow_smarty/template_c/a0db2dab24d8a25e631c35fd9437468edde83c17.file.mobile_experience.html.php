@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2015-08-24 06:30:40
+<?php /* Smarty version Smarty-3.1.12, created on 2015-09-14 10:06:49
          compiled from "E:\wamp\www\loov\ow_plugins\skadate\views\components\mobile_experience.html" */ ?>
-<?php /*%%SmartyHeaderCode:2041455daf250cdead5-38664233%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2782455f6d47964c380-51655670%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2041455daf250cdead5-38664233',
+  'nocache_hash' => '2782455f6d47964c380-51655670',
   'function' => 
   array (
   ),
@@ -22,9 +22,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.12',
-  'unifunc' => 'content_55daf250d155e4_12195239',
+  'unifunc' => 'content_55f6d479682e81_78409819',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55daf250d155e4_12195239')) {function content_55daf250d155e4_12195239($_smarty_tpl) {?><div class="ow_index_app_banner ow_center">
+<?php if ($_valid && !is_callable('content_55f6d479682e81_78409819')) {function content_55f6d479682e81_78409819($_smarty_tpl) {?><div class="ow_index_app_banner ow_center">
     <?php  $_smarty_tpl->tpl_vars['promo'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['promo']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['promos']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['promo']->key => $_smarty_tpl->tpl_vars['promo']->value){
